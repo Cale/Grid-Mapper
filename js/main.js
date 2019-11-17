@@ -1,34 +1,25 @@
 
-//var start = document.getElementById("link");
+// Initialize map
+var map = L.map('map').setView([51.505, -0.09], 13);
 
-// start.addEventListener('click', function() {
-//     console.log("clicked");
-//     chrome.system.cpu.getInfo(function(){})
-//     var socket = 0;
-//     chrome.sockets.udp.create(function (createInfo) //Create socket entry
-//     {
-//        socket = createInfo.socketId;
-//        console.log(socket);
-//     });
-//     // chrome.sockets.udp.bind(integer socketId, string address, integer port, function callback)
-//     // chrome.sockets.udp.create({}, function (socketInfo) {
-//     //     // The socket is created, now we can send some data
-//     //     var socketId = socketInfo.socketId;
-//     //     var arrayBuffer = stringToArrayBuffer("hello");
-//     //     chrome.sockets.udp.send(socketId, stringToArrayBuffer("hello"), "127.0.0.1", 2237, function(sendInfo) {
-//     //         console.log("sent " + sendInfo.bytesSent);
-//     //         if (sendInfo.resultCode < 0) {
-//     //             console.log("Error listening: " + chrome.runtime.lastError.message);
-//     //         }
-//     //     });
-//     // });
-// });
-//
-// function stringToArrayBuffer(string) {
-//     var buffer = new ArrayBuffer(string.length * 2);
-//     var bufferView = new Uint16Array(buffer);
-//     for (var i = 0, stringLength = string.length; i < stringLength; i++) {
-//         bufferView = string.charCodeAt(i);
-//     }
-//     return buffer;
-// }
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+L.marker([51.5, -0.09]).addTo(map)
+    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    .openPopup();
+
+// Push grids to the page
+$(function () {
+  var socket = io();
+  // $('form').submit(function(e){
+  //   e.preventDefault(); // prevents page reloading
+  //   socket.emit('chat message', $('#m').val());
+  //   $('#m').val('');
+  //   return false;
+  // });
+  socket.on('new grid square', function(msg){
+    $('#raw-data').append($('<li>').text(msg));
+  });
+});

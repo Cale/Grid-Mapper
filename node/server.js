@@ -14,7 +14,6 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '../', 'index.html'));
 });
 
-
 io.on('connection', function(socket){
   console.log('a user connected');
 
@@ -30,10 +29,7 @@ io.on('connection', function(socket){
 
         console.log("New grid square. Sending message. "+gridsquare);
         io.emit('new grid square', gridsquare);
-
-
     }
-
   });
 
   tail.on("error", function(error) {
