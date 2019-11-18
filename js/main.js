@@ -1,6 +1,6 @@
 
-// Initialize map
-var map = L.map('map').setView([51.505, -0.09], 13);
+// Initialize Leaflet.js map (https://leafletjs.com/)
+var map = L.map('map').setView([51.505, -0.09], 6);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -9,6 +9,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 L.marker([51.5, -0.09]).addTo(map)
     .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
     .openPopup();
+
+// Initialize Leaflet.Maidenhead library (https://gitlab.com/IvanSanchez/leaflet.maidenhead)
+L.maidenhead({ precision: 4 }).addTo(map);
 
 // Push grids to the page
 $(function () {
