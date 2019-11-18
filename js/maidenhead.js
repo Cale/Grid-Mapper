@@ -30,11 +30,17 @@ L.Maidenhead = L.FeatureGroup.extend({
 			return L.marker(latlng, {
 				icon: L.divIcon({
 					html:
-						"<div style='background:white; border:1px solid #888; position: relative; display: inline-block; left: -0.25em; top: -0.5em; '>" +
-						L.Maidenhead.latLngToIndex(latlng.lat, latlng.lng, precision) +
+						"<div id="+L.Maidenhead.latLngToIndex(latlng.lat, latlng.lng, precision)+" style='background:white; position: relative; display: inline-block; left: -0.25em; top: -0.5em; '>" +
+						//L.Maidenhead.latLngToIndex(latlng.lat, latlng.lng, precision) +
 						"</div>",
 					iconSize: [0, 0],
 				}),
+			});
+		},
+
+		fillSquare: function fillMaidenheadSquare(northwest, southeast) {
+			return L.rectangle([northwest, southeast], {
+				color: "red",
 			});
 		},
 
@@ -88,6 +94,7 @@ L.Maidenhead = L.FeatureGroup.extend({
 	},
 
 	_update: function _update() {
+		//console.log(this);
 		if (!this._map) {
 			return;
 		}
@@ -120,12 +127,15 @@ L.Maidenhead = L.FeatureGroup.extend({
 					this.addLayer(L.rectangle(bbox, this.options.polygonStyle));
 
 					if (this.options.spawnMarker) {
+
 						var marker = this.options.spawnMarker(
-							bbox.getCenter(),
+							//bbox.getCenter(),
+							bbox.getNorthWest(),
 							this.options.precision
 						);
+
 						if (marker) {
-							this.addLayer(marker);
+							//this.addLayer(marker);
 						}
 					}
 				}
