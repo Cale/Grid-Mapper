@@ -23,12 +23,6 @@ L.maidenhead({
 	}
  }).addTo(map);
 
-
-
- L.rectangle([[52, -8], [53, -6]], {
-   color: "red",
- }).addTo(map);
-
 // Push grids to the page
 $(function () {
   var socket = io();
@@ -39,7 +33,7 @@ $(function () {
   //   return false;
   // });
   socket.on('new grid square', function(msg){
-    $('#raw-data').append($('<li>').text(msg));
+    //$('#raw-data').append($('<li>').text(msg));
 
     var coords = L.Maidenhead.indexToBBox(msg);
 
