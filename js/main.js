@@ -23,6 +23,10 @@ L.maidenhead({
 	}
  }).addTo(map);
 
+// Initialize layer to hold grids calling CQ
+ var cqgrids = new L.FeatureGroup();
+ cqgrids.addTo(map);
+
 // Push grids to the page
 $(function () {
   var socket = io();
@@ -38,7 +42,8 @@ $(function () {
     var coords = L.Maidenhead.indexToBBox(msg);
 
     L.rectangle([[coords[0], coords[1]], [coords[2], coords[3]]], {
+      name: msg,
       color: "red",
-    }).addTo(map);
+    }).addTo(cqgrids);
   });
 });
