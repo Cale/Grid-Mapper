@@ -100,7 +100,9 @@ textarea {
 
    #map { height: 800px; }
 
-
+   .leaflet-tile.leaflet-tile-loaded {
+     filter: brightness(85%) grayscale(100%);
+   }
 
 /* ==========================================================================
    Helper classes
