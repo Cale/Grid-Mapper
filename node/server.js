@@ -7,7 +7,6 @@ var fs = require('fs');
 Tail = require('tail').Tail;
 var logfile = "/home/cale/.local/share/WSJT-X/ALL.TXT"
 
-//app.use(app.static(path.join(__dirname, '../')));
 app.use('/css', express.static(path.join(__dirname, '../css')));
 app.use('/js', express.static(path.join(__dirname, '../js')));
 app.get('/', function(req, res){
@@ -23,12 +22,16 @@ io.on('connection', function(socket){
     if (data.includes("CQ")) {
         var gridsquare;
         var arr;
-        //console.log(data.substring(data.indexOf("CQ")));
         arr = data.substring(data.indexOf("CQ")).split(" ");
         gridsquare = arr[arr.length-1];
 
-        console.log("New grid square. Sending message. "+gridsquare);
-        io.emit('new grid square', gridsquare);
+        // Check whether gridsquare is 4 characters long.
+        if (gridsquare.length == 4) {
+          console.log("New grid square. Sending message. "+gridsquare);
+          io.emit('new grid square', gridsquare);
+        } else {
+          console.log("New grid square is irregular: "+gridsquare);
+        }
     }
   });
 

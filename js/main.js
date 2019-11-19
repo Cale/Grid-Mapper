@@ -6,10 +6,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-// L.marker([51.5, -0.09]).addTo(map)
-//     .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-//     .openPopup();
-
 // Initialize Leaflet.Maidenhead library (https://gitlab.com/IvanSanchez/leaflet.maidenhead)
 L.maidenhead({
   precision: 4,
@@ -30,14 +26,7 @@ L.maidenhead({
 // Push grids to the page
 $(function () {
   var socket = io();
-  // $('form').submit(function(e){
-  //   e.preventDefault(); // prevents page reloading
-  //   socket.emit('chat message', $('#m').val());
-  //   $('#m').val('');
-  //   return false;
-  // });
   socket.on('new grid square', function(msg){
-    //$('#raw-data').append($('<li>').text(msg));
 
     var coords = L.Maidenhead.indexToBBox(msg);
 
@@ -47,3 +36,11 @@ $(function () {
     }).addTo(cqgrids);
   });
 });
+
+// Remove grids calling CQ every 15 seconds before new grids are decoded.
+window.setInterval(function() {
+    var date = new Date();
+    if(date.getSeconds() === 57 || date.getSeconds() === 12 || date.getSeconds() === 27 || date.getSeconds() === 42) {
+        cqgrids.clearLayers();
+    }
+}, 1000); // Repeat every second
