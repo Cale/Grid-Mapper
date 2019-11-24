@@ -1,3 +1,6 @@
+var mycallsign = "K4HCK";
+var mygridsquare = "EM65";
+var workingcallsign = "";
 
 // Initialize Leaflet.js map (https://leafletjs.com/)
 var map = L.map('map').setView([35.85, -88.39], 5);
@@ -19,14 +22,25 @@ L.maidenhead({
 	}
  }).addTo(map);
 
-// Initialize layer to hold grids calling CQ
+// Initialize layers to hold grid squares.
  var cqgrids = new L.FeatureGroup();
+ var mygrid = new L.FeatureGroup();
  cqgrids.addTo(map);
+ mygrid.addTo(map);
 
-// Push grids to the page
+// Draw my grid square on map.
+var mygridcoords = L.Maidenhead.indexToBBox(mygridsquare);
+L.rectangle([[mygridcoords[0], mygridcoords[1]], [mygridcoords[2], mygridcoords[3]]], {
+  name: mygridsquare,
+  color: "#0000ff",
+  fillOpacity: 0.75,
+  stroke: false,
+}).addTo(mygrid);
+
+// Receive and draw events.
 $(function () {
   var socket = io();
-  socket.on('new grid square', function(msg){
+  socket.on('new CQ square', function(msg){
 
     var coords = L.Maidenhead.indexToBBox(msg);
 
@@ -44,6 +58,7 @@ window.setInterval(function() {
     var date = new Date();
     if(date.getSeconds() === 58 || date.getSeconds() === 13 || date.getSeconds() === 28 || date.getSeconds() === 43) {
         cqgrids.clearLayers();
+        //map.removeLayer(cqgrids);
     }
 }, 1000); // Repeat every second
 
@@ -52,3 +67,8 @@ window.onload = window.onresize = function () {
     var height = window.innerHeight;
     mapcontainer.style.height = height + "px";
 }
+
+// 191124_165730    14.074 Tx FT8      0  0.0 1711 K7IE K4HCK EM65
+// 191124_165945    14.074 Tx FT8      0  0.0 1271 W1AVK K4HCK R-16
+// 191124_170000    14.074 Rx FT8    -15 -0.1 1270 K4HCK W1AVK RRR
+// 191124_170015    14.074 Tx FT8      0  0.0 1271 W1AVK K4HCK 73
