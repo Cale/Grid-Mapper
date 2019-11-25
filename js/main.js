@@ -51,6 +51,15 @@ $(function () {
       stroke: false,
     }).addTo(cqgrids);
   });
+  socket.on('get ham info', function(haminfo) {
+    // Calling HamDB.
+    console.log("Calling HamDB.");
+    console.log(haminfo);
+    //haminfo = JSON.parse(haminfo);
+
+    console.log(haminfo["hamdb"]["callsign"]["call"]);
+    //$("#ham-info ul").append(haminfo);
+  });
 });
 
 // Remove grids calling CQ every 15 seconds before new grids are decoded.

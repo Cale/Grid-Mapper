@@ -5,6 +5,7 @@ var path = require('path');
 var io = require('socket.io')(http);
 var fs = require('fs');
 Tail = require('tail').Tail;
+var fetch = require('node-fetch');
 var logfile = "/home/cale/.local/share/WSJT-X/ALL.TXT"
 var mycallsign = "K4HCK";
 var mygridsquare = "EM65";
@@ -17,6 +18,18 @@ app.use('/js', express.static(path.join(__dirname, '../js')));
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '../', 'index.html'));
 });
+
+gethaminfo = function(callsign) {
+  let url = "http://api.hamdb.org/v1/"+callsign+"/json/k4hck-gridmapper";
+  let settings = { method: "Get" };
+
+  fetch(url, settings)
+    .then(res => res.json())
+    .then((json) => {
+      console.log(json);
+      io.emit('get ham info', json);
+    });
+}
 
 io.on('connection', function(socket){
   console.log('a user connected');
@@ -44,11 +57,13 @@ io.on('connection', function(socket){
       console.log("My second transmit after calling CQ. Working "+ workingcallsign);
       callingcq = false;
       // Get Ham's info.
+      gethaminfo(workingcallsign);
     } else if (qso.includes(mycallsign) && qso.includes(workingcallsign) && (qso[9].includes("R-") || qso[9].includes("R+") || qso[9].includes("RRR"))) {
       // Received report or report recieved.
-      console.log("R or RRR");
+      console.log("R or RRR with "+workingcallsign);
       callingcq = false;
       // Get Ham's info.
+      gethaminfo(workingcallsign);
     } else if (qso.includes(mycallsign) && qso.includes(workingcallsign) && qso[9].includes("73")) {
       // QSO is ending.
       callingcq = false;
@@ -60,10 +75,31 @@ io.on('connection', function(socket){
 
         // Check whether gridsquare is 4 characters long.
         if (gridsquare.length == 4) {
-          console.log("New grid square. Sending message. "+gridsquare);
+          //console.log("New grid square. Sending message. "+gridsquare);
           io.emit('new CQ square', gridsquare);
+   //        testjson = { "hamdb":
+   // { "version": "1",
+   //   "callsign":
+   //    { "call": "KG5EM",
+   //      "class": "E",
+   //      "expires": "07/30/2029",
+   //      "status": "A",
+   //      "grid": "EM16bk",
+   //      "lat": "36.4222780",
+   //      "lon": "-97.9149160",
+   //      "fname": "EDWARD",
+   //      "mi": "F",
+   //      "name": "MURPHY",
+   //      "suffix": "",
+   //      "addr1": "2802 SCISSORTAIL LANE",
+   //      "addr2": "ENID",
+   //      "state": "OK",
+   //      "zip": "73703",
+   //      "country": "United States" },
+   //   "messages": { "status": "K" } } };
+   //   io.emit('get ham info', testjson);
         } else {
-          console.log("New grid square is irregular: "+gridsquare);
+          //console.log("New grid square is irregular: "+gridsquare);
         }
     }
   });
