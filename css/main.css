@@ -102,12 +102,19 @@ textarea {
 
    #ham-info {
      background-color: #fff;
+     //display: none;
+     font-family: sans-serif;
+     padding: 40px;
      position: absolute;
      top: 0;
      right: 0;
-     width: 300px;
+     width: 200px;
      z-index: 1000;
    }
+
+    #ham-info h1 {
+      margin-top: 0;
+    }
 
    .leaflet-tile.leaflet-tile-loaded {
      filter: brightness(85%) grayscale(100%);

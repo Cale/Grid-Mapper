@@ -52,13 +52,19 @@ $(function () {
     }).addTo(cqgrids);
   });
   socket.on('get ham info', function(haminfo) {
-    // Calling HamDB.
-    console.log("Calling HamDB.");
-    console.log(haminfo);
-    //haminfo = JSON.parse(haminfo);
+    var callinggrid = haminfo["hamdb"]["callsign"]["grid"].slice(0,4);
+    var callingstation = haminfo["hamdb"]["callsign"]["call"];
+    var firstname = haminfo["hamdb"]["callsign"]["fname"].toLowerCase();
+    var lastname = haminfo["hamdb"]["callsign"]["name"].toLowerCase();
+    var city = haminfo["hamdb"]["callsign"]["addr2"].toLowerCase();
 
-    console.log(haminfo["hamdb"]["callsign"]["call"]);
-    //$("#ham-info ul").append(haminfo);
+    $("#ham-info").html("");
+    $("#ham-info").append("<h1>"+callingstation+"</h1>\
+      <h2>"+callinggrid+"</h2>\
+      <p>"+firstname.charAt(0).toUpperCase() + firstname.slice(1)+" "+lastname.charAt(0).toUpperCase() + lastname.slice(1)+"\
+      <br>"+city.charAt(0).toUpperCase() + city.slice(1)+", "+haminfo["hamdb"]["callsign"]["state"]+"\
+      <br>"+haminfo["hamdb"]["callsign"]["country"]+"</p>\
+      <p><a href='https://qrz.com/lookup/"+callingstation+"' target='_blank'>View on QRZ</a></p>");
   });
 });
 

@@ -77,27 +77,27 @@ io.on('connection', function(socket){
         if (gridsquare.length == 4) {
           //console.log("New grid square. Sending message. "+gridsquare);
           io.emit('new CQ square', gridsquare);
-   //        testjson = { "hamdb":
-   // { "version": "1",
-   //   "callsign":
-   //    { "call": "KG5EM",
-   //      "class": "E",
-   //      "expires": "07/30/2029",
-   //      "status": "A",
-   //      "grid": "EM16bk",
-   //      "lat": "36.4222780",
-   //      "lon": "-97.9149160",
-   //      "fname": "EDWARD",
-   //      "mi": "F",
-   //      "name": "MURPHY",
-   //      "suffix": "",
-   //      "addr1": "2802 SCISSORTAIL LANE",
-   //      "addr2": "ENID",
-   //      "state": "OK",
-   //      "zip": "73703",
-   //      "country": "United States" },
-   //   "messages": { "status": "K" } } };
-   //   io.emit('get ham info', testjson);
+          testjson = { "hamdb":
+   { "version": "1",
+     "callsign":
+      { "call": "KG5EM",
+        "class": "E",
+        "expires": "07/30/2029",
+        "status": "A",
+        "grid": "EM16bk",
+        "lat": "36.4222780",
+        "lon": "-97.9149160",
+        "fname": "EDWARD",
+        "mi": "F",
+        "name": "MURPHY",
+        "suffix": "",
+        "addr1": "2802 SCISSORTAIL LANE",
+        "addr2": "ENID",
+        "state": "OK",
+        "zip": "73703",
+        "country": "United States" },
+     "messages": { "status": "K" } } };
+     io.emit('get ham info', testjson);
         } else {
           //console.log("New grid square is irregular: "+gridsquare);
         }
