@@ -78,26 +78,26 @@ io.on('connection', function(socket){
           //console.log("New grid square. Sending message. "+gridsquare);
           io.emit('new CQ square', gridsquare);
           testjson = { "hamdb":
-   { "version": "1",
-     "callsign":
-      { "call": "KG5EM",
-        "class": "E",
-        "expires": "07/30/2029",
-        "status": "A",
-        "grid": "EM16bk",
-        "lat": "36.4222780",
-        "lon": "-97.9149160",
-        "fname": "EDWARD",
-        "mi": "F",
-        "name": "MURPHY",
-        "suffix": "",
-        "addr1": "2802 SCISSORTAIL LANE",
-        "addr2": "ENID",
-        "state": "OK",
-        "zip": "73703",
-        "country": "United States" },
-     "messages": { "status": "K" } } };
-     io.emit('get ham info', testjson);
+            { "version": "1",
+             "callsign":
+              { "call": "KG5EM",
+                "class": "E",
+                "expires": "07/30/2029",
+                "status": "A",
+                "grid": "EM16bk",
+                "lat": "36.4222780",
+                "lon": "-97.9149160",
+                "fname": "EDWARD",
+                "mi": "F",
+                "name": "MURPHY",
+                "suffix": "",
+                "addr1": "2802 SCISSORTAIL LANE",
+                "addr2": "ENID",
+                "state": "OK",
+                "zip": "73703",
+                "country": "United States" },
+             "messages": { "status": "K" } } };
+          //io.emit('get ham info', testjson);
         } else {
           //console.log("New grid square is irregular: "+gridsquare);
         }
@@ -121,43 +121,3 @@ http.listen(8080, function(){
 // 191124_165945    14.074 Tx FT8      0  0.0 1271 W1AVK K4HCK R-16
 // 191124_170000    14.074 Rx FT8    -15 -0.1 1270 K4HCK W1AVK RRR
 // 191124_170015    14.074 Tx FT8      0  0.0 1271 W1AVK K4HCK 73
-
-
-
-
-
-
-// var http = require('http');
-//
-// http.createServer(function (req, res) {
-//   res.writeHead(200, {'Content-Type': 'text/plain'});
-//   res.end('Hello World!');
-// }).listen(8080);
-
-
-
-
-
-// const { Socket } = require('qtdatastream').socket;
-// const { QUserType } = require('qtdatastream').types;
-// const net = require('net');
-//
-// var client = net.Socket();.local/share/WSJT-X/
-
-//
-// // Connect to a Qt socket
-// // and write something into the socket
-// client.connect(2237, "127.0.0.1", function(){
-//     const qtsocket = new Socket(client);
-//
-//     // Here data is the already parsed response
-//     qtsocket.on('data', function(data) {
-//         console.log(data);
-//     });
-//
-//     // Write something to the socket
-//     // qtsocket.write({
-//     //     "AString": "BString",
-//     //     "CString": 42
-//     // });
-// });

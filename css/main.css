@@ -102,23 +102,38 @@ textarea {
 
    #ham-info {
      background-color: #fff;
-     //display: none;
+     display: none;
      font-family: sans-serif;
-     padding: 40px;
      position: absolute;
      top: 0;
      right: 0;
-     width: 200px;
+     width: 250px;
      z-index: 1000;
    }
 
-    #ham-info h1 {
+   #close {
+     font-weight: bold;
+     padding: 10px 20px 0 0;
+     text-align: right;
+   }
+
+   #close a {
+     text-decoration: none;
+   }
+
+   #working-station {
+     padding: 0 40px 40px 40px;
+   }
+
+    #working-station h1 {
       margin-top: 0;
     }
 
    .leaflet-tile.leaflet-tile-loaded {
-     filter: brightness(85%) grayscale(100%);
+     filter: brightness(70%) grayscale(100%);
    }
+
+   .leaflet-fade-anim .leaflet-tile,.leaflet-zoom-anim .leaflet-zoom-animated { will-change:auto !important; }
 
 /* ==========================================================================
    Helper classes
