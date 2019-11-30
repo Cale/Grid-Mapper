@@ -11,6 +11,7 @@ var mycallsign = "K4HCK"
 var mygridsquare = "EM65"
 var workingcallsign = ""
 var callingcq = false
+var cqarr = []
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -40,9 +41,15 @@ function createWindow () {
     fetch(url, settings)
       .then(res => res.json())
       .then((json) => {
-        console.log(json);
+        //console.log(json);
         mainWindow.webContents.send('get ham info', json)
       });
+  }
+
+  trimcqarray = function(arr) {
+    if (arr.length > 15) {
+      cqarr.splice(0, arr.length - 15);
+    }
   }
 
   tail = new Tail(logfile);
@@ -60,6 +67,7 @@ function createWindow () {
       workingcallsign = qso[7];
       callingcq = false;
       console.log("I'm working callsign "+ workingcallsign);
+      gethaminfo(workingcallsign);
     } else if (qso.includes(mycallsign) && callingcq) {
       // My second transmit aftter calling CQ. Grab station's callsign.
       workingcallsign = qso[8];
@@ -86,6 +94,8 @@ function createWindow () {
         if (gridsquare.length == 4) {
           //console.log("New grid square. Sending message. "+gridsquare);
           mainWindow.webContents.send('new CQ grid', gridsquare)
+          cqarr.push(qso);
+          trimcqarray(cqarr);
           testjson = { "hamdb":
             { "version": "1",
              "callsign":

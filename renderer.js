@@ -9,8 +9,6 @@ var mycallsign = "K4HCK";
 var mygridsquare = "EM65";
 
 ipc.on('new CQ grid', (event, msg) => {
- // do something
- console.log("New CQ grid: "+msg);
  $("#map").prepend(msg);
  var coords = L.Maidenhead.indexToBBox(msg);
 
