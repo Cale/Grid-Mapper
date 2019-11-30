@@ -100,21 +100,36 @@ textarea {
 
    #map { height: 800px; }
 
+   a {
+     color: #9feae3;
+   }
+
+   a:visited {
+     color: #9feae3;
+   }
+
+   a:hover {
+     color: #fff;
+   }
+
    #ham-info {
-     background-color: #fff;
+     background-color: #036aaf;
+     color: #fff;
      display: none;
      font-family: sans-serif;
      position: absolute;
      top: 0;
-     right: 0;
+     left: 0;
      width: 250px;
      z-index: 1000;
    }
 
    #close {
-     font-weight: bold;
-     padding: 10px 20px 0 0;
-     text-align: right;
+     bottom: 0;
+     padding: 0 0 20px 0;
+     position: absolute;
+     text-align: center;
+     width: 100%;
    }
 
    #close a {
@@ -122,11 +137,14 @@ textarea {
    }
 
    #working-station {
-     padding: 0 40px 40px 40px;
+     padding: 80px 30px 40px 30px;
+     text-align: center;
    }
 
     #working-station h1 {
+      border-bottom: 1px dashed #9fccea;
       margin-top: 0;
+      padding-bottom: 20px;
     }
 
    .leaflet-tile.leaflet-tile-loaded {

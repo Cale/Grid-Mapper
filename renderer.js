@@ -5,8 +5,17 @@
 // selectively enable features needed in the rendering
 // process.
 const ipc = require('electron').ipcRenderer;
-var mycallsign = "K4HCK";
-var mygridsquare = "EM65";
+
+ipc.on('draw my grid', (event, mygridsquare) => {
+  // Draw my grid square on map.
+  var mygridcoords = L.Maidenhead.indexToBBox(mygridsquare);
+  L.rectangle([[mygridcoords[0], mygridcoords[1]], [mygridcoords[2], mygridcoords[3]]], {
+    name: mygridsquare,
+    color: "#0000ff",
+    fillOpacity: 0.75,
+    stroke: false,
+  }).addTo(mygrid);
+})
 
 ipc.on('new CQ grid', (event, msg) => {
  $("#map").prepend(msg);

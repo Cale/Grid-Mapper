@@ -20,8 +20,8 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 600,
+    width: 2000,
+    height: 800,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js')
@@ -33,6 +33,11 @@ function createWindow () {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
+
+  // Send message when DOM is ready.
+  mainWindow.webContents.once('dom-ready', () => {
+    mainWindow.webContents.send('draw my grid', mygridsquare)
+  });
 
   // Open links in OS default browser.
   mainWindow.webContents.on('new-window', function(e, url) {

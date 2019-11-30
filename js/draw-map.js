@@ -2,10 +2,14 @@ var mycallsign = "K4HCK";
 var mygridsquare = "EM65";
 
 // Initialize Leaflet.js map (https://leafletjs.com/)
-var map = L.map('map').setView([35.85, -88.39], 5);
+var map = L.map('map', {zoomControl: false}).setView([35.85, -88.39], 5);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+L.control.zoom({
+     position:'topright'
 }).addTo(map);
 
 // Initialize Leaflet.Maidenhead library (https://gitlab.com/IvanSanchez/leaflet.maidenhead)
@@ -29,14 +33,14 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
  mygrid.addTo(map);
  workinggrid.addTo(map);
 
-// Draw my grid square on map.
-var mygridcoords = L.Maidenhead.indexToBBox(mygridsquare);
-L.rectangle([[mygridcoords[0], mygridcoords[1]], [mygridcoords[2], mygridcoords[3]]], {
-  name: mygridsquare,
-  color: "#0000ff",
-  fillOpacity: 0.75,
-  stroke: false,
-}).addTo(mygrid);
+// // Draw my grid square on map.
+// var mygridcoords = L.Maidenhead.indexToBBox(mygridsquare);
+// L.rectangle([[mygridcoords[0], mygridcoords[1]], [mygridcoords[2], mygridcoords[3]]], {
+//   name: mygridsquare,
+//   color: "#0000ff",
+//   fillOpacity: 0.75,
+//   stroke: false,
+// }).addTo(mygrid);
 
 // Remove grids calling CQ every 15 seconds before new grids are decoded.
 window.setInterval(function() {
