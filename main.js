@@ -2,13 +2,15 @@
 const {app, BrowserWindow} = require('electron')
 //, server = require("./node/server")
 const path = require('path')
-const electron = require('electron'),
-ipc = electron.ipcMain;
+const electron = require('electron')
+const fetch = require('node-fetch');
+const ipc = electron.ipcMain;
 Tail = require('tail').Tail
 var logfile = "/home/cale/.local/share/WSJT-X/ALL.TXT"
 var mycallsign = "K4HCK"
 var mygridsquare = "EM65"
 var workingcallsign = ""
+var callingcq = false
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -17,7 +19,7 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
+    width: 1200,
     height: 600,
     webPreferences: {
       nodeIntegration: true,
@@ -31,13 +33,23 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
+  gethaminfo = function(callsign) {
+    let url = "http://api.hamdb.org/v1/"+callsign+"/json/k4hck-gridmapper";
+    let settings = { method: "Get" };
+
+    fetch(url, settings)
+      .then(res => res.json())
+      .then((json) => {
+        console.log(json);
+        mainWindow.webContents.send('get ham info', json)
+      });
+  }
+
   tail = new Tail(logfile);
 
   tail.on("line", function(data) {
-    console.log(data)
     var qso = data.split(" ");
     qso = qso.filter(item => item !== "");
-    //console.log(qso);
 
     if (qso.includes(mycallsign) && qso[7].includes("CQ")) {
       // I'm calling CQ / first call.
@@ -72,9 +84,8 @@ function createWindow () {
 
         // Check whether gridsquare is 4 characters long.
         if (gridsquare.length == 4) {
-          console.log("New grid square. Sending message. "+gridsquare);
+          //console.log("New grid square. Sending message. "+gridsquare);
           mainWindow.webContents.send('new CQ grid', gridsquare)
-          //io.emit('new CQ square', gridsquare);
           testjson = { "hamdb":
             { "version": "1",
              "callsign":
