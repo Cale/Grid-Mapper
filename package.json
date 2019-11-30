@@ -1,0 +1,22 @@
+{
+  "name": "Grid-Mapper",
+  "version": "1.0.0",
+  "description": "Mapping grid squares.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/Cale/Grid-Mapper",
+  "keywords": [
+    "FT8",
+    "grid",
+    "gridsquare",
+    "hamradio",
+    "wsjt-x"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^7.1.2"
+  }
+}
