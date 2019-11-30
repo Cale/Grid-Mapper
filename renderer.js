@@ -57,3 +57,7 @@ ipc.on('get ham info', (event, haminfo) => {
 
   $( "#ham-info" ).fadeIn( "slow", function() {});
 })
+
+ipc.on('clear working grid', (event) => {
+  workinggrid.clearLayers();
+})

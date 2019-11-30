@@ -48,9 +48,9 @@ window.setInterval(function() {
 }, 1000); // Repeat every second
 
 window.onload = window.onresize = function () {
-    var mapcontainer = document.getElementById("map");
     var height = window.innerHeight;
-    mapcontainer.style.height = height + "px";
+    document.getElementById("map").style.height = height + "px";
+    document.getElementById("ham-info").style.height = height + "px";
 }
 
 $( "#close a" ).click(function() {

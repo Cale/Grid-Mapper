@@ -34,6 +34,12 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
+  // Open links in OS default browser.
+  mainWindow.webContents.on('new-window', function(e, url) {
+    e.preventDefault();
+    require('electron').shell.openExternal(url);
+  });
+
   gethaminfo = function(callsign) {
     let url = "http://api.hamdb.org/v1/"+callsign+"/json/k4hck-gridmapper";
     let settings = { method: "Get" };
@@ -86,6 +92,7 @@ function createWindow () {
       callingcq = false;
       workingcallsign = "";
       console.log("QSO is ending.");
+      mainWindow.webContents.send('clear working grid')
     } else if (qso.includes("CQ")) {
         var gridsquare;
         gridsquare = qso[qso.length-1];
