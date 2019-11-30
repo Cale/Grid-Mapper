@@ -2,11 +2,11 @@ var express = require('express');
 var app = express();
 var http = require('http').createServer(app);
 var path = require('path');
-var io = require('socket.io')(http);
+var io = require('socket.io-client')(http);
 var fs = require('fs');
-Tail = require('tail').Tail;
+//Tail = require('tail').Tail;
 var fetch = require('node-fetch');
-var logfile = "/home/cale/.local/share/WSJT-X/ALL.TXT"
+//var logfile = "/home/cale/.local/share/WSJT-X/ALL.TXT"
 var mycallsign = "K4HCK";
 var mygridsquare = "EM65";
 var workingcallsign = "";
@@ -15,6 +15,7 @@ var callingcq = false;
 
 app.use('/css', express.static(path.join(__dirname, '../css')));
 app.use('/js', express.static(path.join(__dirname, '../js')));
+app.use('/socket.io', express.static(path.join(__dirname, '../socket.io')));
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '../', 'index.html'));
 });
@@ -75,7 +76,7 @@ io.on('connection', function(socket){
 
         // Check whether gridsquare is 4 characters long.
         if (gridsquare.length == 4) {
-          //console.log("New grid square. Sending message. "+gridsquare);
+          console.log("New grid square. Sending message. "+gridsquare);
           io.emit('new CQ square', gridsquare);
           testjson = { "hamdb":
             { "version": "1",

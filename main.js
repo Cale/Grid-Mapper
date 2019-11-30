@@ -1,6 +1,14 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
+//, server = require("./node/server")
 const path = require('path')
+const electron = require('electron'),
+ipc = electron.ipcMain;
+Tail = require('tail').Tail
+var logfile = "/home/cale/.local/share/WSJT-X/ALL.TXT"
+var mycallsign = "K4HCK"
+var mygridsquare = "EM65"
+var workingcallsign = ""
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -12,6 +20,7 @@ function createWindow () {
     width: 800,
     height: 600,
     webPreferences: {
+      nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js')
     }
   })
@@ -20,7 +29,78 @@ function createWindow () {
   mainWindow.loadFile('index.html')
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
+
+  tail = new Tail(logfile);
+
+  tail.on("line", function(data) {
+    console.log(data)
+    var qso = data.split(" ");
+    qso = qso.filter(item => item !== "");
+    //console.log(qso);
+
+    if (qso.includes(mycallsign) && qso[7].includes("CQ")) {
+      // I'm calling CQ / first call.
+      console.log("I'm Calling CQ.");
+      callingcq = true;
+    } else if (qso.includes(mycallsign) && qso.includes(mygridsquare)) {
+      // I'm responding to a CQ call. Grab station's callsign.
+      workingcallsign = qso[7];
+      callingcq = false;
+      console.log("I'm working callsign "+ workingcallsign);
+    } else if (qso.includes(mycallsign) && callingcq) {
+      // My second transmit aftter calling CQ. Grab station's callsign.
+      workingcallsign = qso[8];
+      console.log("My second transmit after calling CQ. Working "+ workingcallsign);
+      callingcq = false;
+      // Get Ham's info.
+      gethaminfo(workingcallsign);
+    } else if (qso.includes(mycallsign) && qso.includes(workingcallsign) && (qso[9].includes("R-") || qso[9].includes("R+") || qso[9].includes("RRR"))) {
+      // Received report or report recieved.
+      console.log("R or RRR with "+workingcallsign);
+      callingcq = false;
+      // Get Ham's info.
+      gethaminfo(workingcallsign);
+    } else if (qso.includes(mycallsign) && qso.includes(workingcallsign) && qso[9].includes("73")) {
+      // QSO is ending.
+      callingcq = false;
+      workingcallsign = "";
+      console.log("QSO is ending.");
+    } else if (qso.includes("CQ")) {
+        var gridsquare;
+        gridsquare = qso[qso.length-1];
+
+        // Check whether gridsquare is 4 characters long.
+        if (gridsquare.length == 4) {
+          console.log("New grid square. Sending message. "+gridsquare);
+          mainWindow.webContents.send('new CQ grid', gridsquare)
+          //io.emit('new CQ square', gridsquare);
+          testjson = { "hamdb":
+            { "version": "1",
+             "callsign":
+              { "call": "KG5EM",
+                "class": "E",
+                "expires": "07/30/2029",
+                "status": "A",
+                "grid": "EM16bk",
+                "lat": "36.4222780",
+                "lon": "-97.9149160",
+                "fname": "EDWARD",
+                "mi": "F",
+                "name": "MURPHY",
+                "suffix": "",
+                "addr1": "2802 SCISSORTAIL LANE",
+                "addr2": "ENID",
+                "state": "OK",
+                "zip": "73703",
+                "country": "United States" },
+             "messages": { "status": "K" } } };
+          //io.emit('get ham info', testjson);
+        } else {
+          console.log("New grid square is irregular: "+gridsquare);
+        }
+    }
+  })
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -30,6 +110,11 @@ function createWindow () {
     mainWindow = null
   })
 }
+
+// app.on('asynchronous-message', (event, arg) => {
+//   console.log(arg) // prints "ping"
+//   event.reply('asynchronous-reply', 'pong')
+// })
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
