@@ -3,8 +3,10 @@ const {app, BrowserWindow} = require('electron')
 //, server = require("./node/server")
 const path = require('path')
 const electron = require('electron')
-const fetch = require('node-fetch');
-const ipc = electron.ipcMain;
+const fetch = require('node-fetch')
+const os = require('os')
+const fs = require('fs')
+const ipc = electron.ipcMain
 Tail = require('tail').Tail
 var logfile = "/home/cale/.local/share/WSJT-X/ALL.TXT"
 var mycallsign = "K4HCK"
@@ -12,6 +14,8 @@ var mygridsquare = "EM65"
 var workingcallsign = ""
 var callingcq = false
 var cqarr = []
+var platform = os.platform()
+var inipath = ""
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -33,6 +37,21 @@ function createWindow () {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
+
+  // Determine OS type, find WSJT-X INI, set callsign, grid, and log directory.
+  if (platform == "win32" ) {
+    inipath = ""
+  } else {
+    inipath = ""
+    console.log("INI path: "+inipath)
+  }
+
+  parseini = function() {
+    var array = fs.readFileSync(inipath).toString().split("\n");
+    for(i in array) {
+      console.log(array[i]);
+    }
+  }
 
   // Send message when DOM is ready.
   mainWindow.webContents.once('dom-ready', () => {
