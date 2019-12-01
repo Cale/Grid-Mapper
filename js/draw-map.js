@@ -2,7 +2,7 @@ var mycallsign = "K4HCK";
 var mygridsquare = "EM65";
 
 // Initialize Leaflet.js map (https://leafletjs.com/)
-var map = L.map('map', {zoomControl: false}).setView([35.85, -88.39], 5);
+var map = L.map('map', {zoomControl: false}).setView([35.85, -88.39], 4);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -57,7 +57,7 @@ window.onload = window.onresize = function () {
     document.getElementById("ham-info").style.height = height + "px";
 }
 
-$( "#close a" ).click(function() {
+$( ".close" ).click(function() {
   workinggrid.clearLayers();
   $( "#ham-info" ).fadeOut( "fast", function() {
     // Animation complete.
