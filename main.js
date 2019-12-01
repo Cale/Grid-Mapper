@@ -26,7 +26,7 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 2000,
+    width: 1500,
     height: 800,
     webPreferences: {
       nodeIntegration: true,
@@ -38,7 +38,7 @@ function createWindow () {
   mainWindow.loadFile('index.html')
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
   // Send message when DOM is ready.
   mainWindow.webContents.once('dom-ready', () => {
@@ -159,7 +159,7 @@ function createWindow () {
 app.on('ready', function () {
   // Determine OS type, find WSJT-X ini file, set callsign, grid, and log directory.
   if (platform == "win32" ) {
-    inipath = homedir
+    inipath = homedir+"/AppData/Local/WSJT-X/WSJT-X.ini"
   } else {
     inipath = homedir+"/.config/WSJT-X.ini"
   }

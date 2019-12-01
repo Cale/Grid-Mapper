@@ -4,7 +4,9 @@
   "description": "Mapping grid squares.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "repository": "https://github.com/Cale/Grid-Mapper",
   "keywords": [
@@ -17,10 +19,43 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.45",
+    "@electron-forge/maker-deb": "^6.0.0-beta.45",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.45",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.45",
+    "@electron-forge/maker-zip": "^6.0.0-beta.45",
     "electron": "^7.1.2"
   },
   "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
     "node-fetch": "^2.6.0",
     "tail": "^2.0.3"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "Grid_Mapper"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }
