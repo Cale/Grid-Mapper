@@ -1,21 +1,23 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
-//, server = require("./node/server")
 const path = require('path')
 const electron = require('electron')
 const fetch = require('node-fetch')
 const os = require('os')
-const fs = require('fs')
+const fs = require('fs'),
+  readline = require('readline')
 const ipc = electron.ipcMain
 Tail = require('tail').Tail
-var logfile = "/home/cale/.local/share/WSJT-X/ALL.TXT"
-var mycallsign = "K4HCK"
-var mygridsquare = "EM65"
-var workingcallsign = ""
+var platform = os.platform()
+var homedir = os.homedir()
 var callingcq = false
 var cqarr = []
-var platform = os.platform()
-var inipath = ""
+var mycallsign
+var mygridsquare
+var workingcallsign
+var inipath
+var logfile
+var qsolog
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -38,21 +40,6 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
-  // Determine OS type, find WSJT-X INI, set callsign, grid, and log directory.
-  if (platform == "win32" ) {
-    inipath = ""
-  } else {
-    inipath = ""
-    console.log("INI path: "+inipath)
-  }
-
-  parseini = function() {
-    var array = fs.readFileSync(inipath).toString().split("\n");
-    for(i in array) {
-      console.log(array[i]);
-    }
-  }
-
   // Send message when DOM is ready.
   mainWindow.webContents.once('dom-ready', () => {
     mainWindow.webContents.send('draw my grid', mygridsquare)
@@ -71,7 +58,6 @@ function createWindow () {
     fetch(url, settings)
       .then(res => res.json())
       .then((json) => {
-        //console.log(json);
         mainWindow.webContents.send('get ham info', json)
       });
   }
@@ -120,7 +106,6 @@ function createWindow () {
     } else if (qso.includes("CQ")) {
         var gridsquare;
         gridsquare = qso[qso.length-1];
-
         // Check whether gridsquare is 4 characters long.
         if (gridsquare.length == 4) {
           //console.log("New grid square. Sending message. "+gridsquare);
@@ -147,9 +132,9 @@ function createWindow () {
                 "zip": "73703",
                 "country": "United States" },
              "messages": { "status": "K" } } };
-          //io.emit('get ham info', testjson);
+          //mainWindow.webContents.send('get ham info', testjson);
         } else {
-          console.log("New grid square is irregular: "+gridsquare);
+          //console.log("New grid square is irregular: "+gridsquare);
         }
     }
   })
@@ -171,7 +156,30 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', function () {
+  // Determine OS type, find WSJT-X ini file, set callsign, grid, and log directory.
+  if (platform == "win32" ) {
+    inipath = homedir
+  } else {
+    inipath = homedir+"/.config/WSJT-X.ini"
+  }
+
+  var rd = readline.createInterface({
+      input: fs.createReadStream(inipath)
+  })
+
+  rd.on('line', function(line) {
+    if (line.includes("MyCall=")) {
+        mycallsign = line.substring(7)
+    } else if (line.includes("MyGrid=")) {
+        mygridsquare = line.substring(7,11)
+    } else if (line.includes("AzElDir=")) {
+        logfile = line.substring(8)+"/ALL.TXT"
+        qsolog = line.substring(8)+"/wsjtx_log.adi"
+        createWindow()
+    }
+  })
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
