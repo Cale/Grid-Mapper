@@ -1,10 +1,16 @@
 # Grid-Mapper
-Grid Mapper works with WSJT-X to map station grids currently calling CQ and display info for the station currently being worked.
+Grid Mapper works with WSJT-X. Functionality includes displaying calling stations' grids on a map, displaying previously worked grids on a map, displaying station grid currently being worked on a map, and information about the station being worked showing up on a side panel. That panel also provides a link to the working station's QRZ page.
 
-![Grid Mapper v1.0](http://assets.midnightcheese.com/images/grid-mapper-v1.png "Grid Mapper v1.0")
+Color key:
+* Green squares: Previously worked station grids.
+* Yellow squares: Station grids currently calling CQ.
+* Red square: Station currently being worked.
+* Blue square: Your QTH.
+
+![Grid Mapper v1.1](http://assets.midnightcheese.com/images/grid-mapper-v1.1.png "Grid Mapper v1.1")
 
 ## Releases
-Release v1.0 is available with minimal functionality, including calling stations' grids represented on a map, station grid currently being worked showing on a map, and information about station being worked showing up on a side panel. That panel also provides a link to the working station's QRZ page.
+Release v1.1 brings the addition of displaying worked grids on the map. 
 Head over to the [releases](https://github.com/Cale/Grid-Mapper/releases "releases") page for download options.
 
 ## Philosophy
@@ -14,7 +20,7 @@ Grid Mapper is designed for the casual FT8 user. It's primary function allows th
 Next steps include:
 * OS X release
 * Linux ARM release
-* Map worked grids from the WSJT-X QSO history log
+* ~~Map worked grids from the WSJT-X QSO history log~~
 * Windows installer
 
 ## Feedback
