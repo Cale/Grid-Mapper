@@ -29,9 +29,11 @@ L.control.zoom({
  var cqgrids = new L.FeatureGroup();
  var mygrid = new L.FeatureGroup();
  var workinggrid = new L.FeatureGroup();
+ var workedgrids = new L.FeatureGroup();
  cqgrids.addTo(map);
  mygrid.addTo(map);
  workinggrid.addTo(map);
+ workedgrids.addTo(map);
 
 // // Draw my grid square on map.
 // var mygridcoords = L.Maidenhead.indexToBBox(mygridsquare);

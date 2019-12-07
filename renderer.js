@@ -70,3 +70,14 @@ ipc.on('get ham info', (event, haminfo) => {
 ipc.on('clear working grid', (event) => {
   workinggrid.clearLayers();
 })
+
+ipc.on('draw worked grid', (event, grid, call) => {
+  var coords = L.Maidenhead.indexToBBox(grid);
+
+  L.rectangle([[coords[0], coords[1]], [coords[2], coords[3]]], {
+    name: grid,
+    color: "#00ff00",
+    fillOpacity: 0.75,
+    stroke: false,
+  }).addTo(workedgrids);
+})

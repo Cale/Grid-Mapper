@@ -1,6 +1,6 @@
 {
   "name": "Grid-Mapper",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Mapping grid squares.",
   "main": "main.js",
   "scripts": {

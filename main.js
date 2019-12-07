@@ -43,6 +43,20 @@ function createWindow () {
   // Send message when DOM is ready.
   mainWindow.webContents.once('dom-ready', () => {
     mainWindow.webContents.send('draw my grid', mygridsquare)
+
+    // Map QSOs from wsjtx_log.adi.
+    var log = readline.createInterface({
+        input: fs.createReadStream(qsolog)
+    })
+
+    log.on('line', function(line) {
+      if (line.includes("<gridsquare:4>")) {
+          var grid = line.match(/gridsquare:4>(.*)/)[1].substring(0,4)
+          var calllength = Number(line.match(/<call:(.*)/)[1].substring(0,1))
+          var call = line.match(/<call:(.*)/)[1].substring(2,calllength+2)
+          mainWindow.webContents.send('draw worked grid', grid, call)
+      }
+    })
   });
 
   // Open links in OS default browser.
