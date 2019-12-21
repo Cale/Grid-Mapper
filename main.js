@@ -12,6 +12,7 @@ var platform = os.platform()
 var homedir = os.homedir()
 var callingcq = false
 var cqarr = []
+var gridsworked = []
 var mycallsign
 var mygridsquare
 var workingcallsign
@@ -54,6 +55,7 @@ function createWindow () {
           var grid = line.match(/gridsquare:4>(.*)/)[1].substring(0,4)
           var calllength = Number(line.match(/<call:(.*)/)[1].substring(0,1))
           var call = line.match(/<call:(.*)/)[1].substring(2,calllength+2)
+          gridsworked.push(grid)
           mainWindow.webContents.send('draw worked grid', grid, call)
       }
     })
@@ -123,7 +125,13 @@ function createWindow () {
         // Check whether gridsquare is 4 characters long.
         if (gridsquare.length == 4) {
           //console.log("New grid square. Sending message. "+gridsquare);
-          mainWindow.webContents.send('new CQ grid', gridsquare)
+          var gridcolor
+          if (gridsworked.includes(gridsquare)) {
+            gridcolor = "#f9f502"
+          } else {
+            gridcolor = "#f707c3"
+          }
+          mainWindow.webContents.send('new CQ grid', gridsquare, gridcolor)
           cqarr.push(qso);
           trimcqarray(cqarr);
           testjson = { "hamdb":

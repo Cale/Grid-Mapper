@@ -17,13 +17,13 @@ ipc.on('draw my grid', (event, mygridsquare) => {
   }).addTo(mygrid);
 })
 
-ipc.on('new CQ grid', (event, msg) => {
+ipc.on('new CQ grid', (event, msg, gridcolor) => {
  $("#map").prepend(msg);
  var coords = L.Maidenhead.indexToBBox(msg);
 
  L.rectangle([[coords[0], coords[1]], [coords[2], coords[3]]], {
    name: msg,
-   color: "#f9f502",
+   color: gridcolor,
    fillOpacity: 0.75,
    stroke: false,
  }).addTo(cqgrids);
