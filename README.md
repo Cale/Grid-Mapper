@@ -3,14 +3,18 @@ Grid Mapper works with WSJT-X. Functionality includes displaying calling station
 
 Color key:
 * Green squares: Previously worked station grids.
-* Yellow squares: Station grids currently calling CQ.
+* Yellow squares: Previously worked station grids currently calling CQ.
+* Pink squares: New station grids currently calling CQ.
 * Red square: Station currently being worked.
 * Blue square: Your QTH.
 
 ![Grid Mapper v1.1](http://assets.midnightcheese.com/images/grid-mapper-v1.1.png "Grid Mapper v1.1")
 
 ## Releases
+Release v1.2 differentiates between grids calling CQ. Worked grids display as yellow while new grids display as pink. Clicking on the map displays that point's grid.
+
 Release v1.1 brings the addition of displaying worked grids on the map. 
+
 Head over to the [releases](https://github.com/Cale/Grid-Mapper/releases "releases") page for download options.
 
 ## Philosophy
@@ -19,7 +23,7 @@ Grid Mapper is designed for the casual FT8 user. It's primary function allows th
 ## Roadmap
 Next steps include:
 * OS X release
-* Linux ARM release
+* ~~Linux ARM release~~
 * ~~Map worked grids from the WSJT-X QSO history log~~
 * Windows installer
 
