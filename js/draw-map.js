@@ -35,14 +35,16 @@ L.control.zoom({
  workinggrid.addTo(map);
  workedgrids.addTo(map);
 
-// // Draw my grid square on map.
-// var mygridcoords = L.Maidenhead.indexToBBox(mygridsquare);
-// L.rectangle([[mygridcoords[0], mygridcoords[1]], [mygridcoords[2], mygridcoords[3]]], {
-//   name: mygridsquare,
-//   color: "#0000ff",
-//   fillOpacity: 0.75,
-//   stroke: false,
-// }).addTo(mygrid);
+var popup = L.popup();
+
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent('<div class="gridpopup">' + L.Maidenhead.latLngToIndex(e.latlng["lat"], e.latlng["lng"], 4) + '</div>')
+        .openOn(map);
+}
+
+map.on('click', onMapClick);
 
 // Remove grids calling CQ every 15 seconds before new grids are decoded.
 window.setInterval(function() {
