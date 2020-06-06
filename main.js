@@ -16,6 +16,7 @@ var gridsworked = []
 var mycallsign
 var mygridsquare
 var workingcallsign
+var workinggrid
 var inipath
 var logfile
 var qsolog
@@ -74,6 +75,9 @@ function createWindow () {
     fetch(url, settings)
       .then(res => res.json())
       .then((json) => {
+        if (json["hamdb"]["messages"]["status"] != "NOT_FOUND") {
+          workinggrid = json["hamdb"]["callsign"]["grid"].slice(0,4);
+        }
         mainWindow.webContents.send('get ham info', json)
       });
   }
@@ -119,6 +123,12 @@ function createWindow () {
       workingcallsign = "";
       console.log("QSO is ending.");
       mainWindow.webContents.send('clear working grid')
+      if (gridsworked.includes(workinggrid)) {
+        console.log("Already worked this grid.");
+      } else {
+        mainWindow.webContents.send('draw worked grid', workinggrid, workingcallsign)
+        gridsworked.push(workinggrid)
+      }
     } else if (qso.includes("CQ")) {
         var gridsquare;
         gridsquare = qso[qso.length-1];
