@@ -49,7 +49,7 @@ map.on('click', onMapClick);
 // Remove grids calling CQ every 15 seconds before new grids are decoded.
 window.setInterval(function() {
     var date = new Date();
-    if(date.getSeconds() === 58 || date.getSeconds() === 13 || date.getSeconds() === 28 || date.getSeconds() === 43) {
+    if(date.getSeconds() === 55 || date.getSeconds() === 10 || date.getSeconds() === 25 || date.getSeconds() === 40) {
         cqgrids.clearLayers();
         //map.removeLayer(cqgrids);
     }
