@@ -93,6 +93,10 @@ function createWindow () {
   tail.on("line", function(data) {
     var qso = data.split(" ");
     qso = qso.filter(item => item !== "");
+    // For development debugging
+    // if (qso.includes(mycallsign)) {
+    //   console.log(qso);
+    // }
 
     if (qso.includes(mycallsign) && qso[7].includes("CQ")) {
       // I'm calling CQ / first call.
@@ -117,6 +121,13 @@ function createWindow () {
       callingcq = false;
       // Get Ham's info.
       gethaminfo(workingcallsign);
+    } else if (qso.includes(mycallsign) && qso.includes("R")) {
+      // Received report or report recieved Field Day
+      workingcallsign = qso[8];
+      console.log("R FD with "+workingcallsign);
+      callingcq = false;
+      // Get Ham's info.
+      gethaminfo(workingcallsign);
     } else if (qso.includes(mycallsign) && qso.includes(workingcallsign) && qso[9].includes("73")) {
       // QSO is ending.
       callingcq = false;
@@ -129,6 +140,11 @@ function createWindow () {
         mainWindow.webContents.send('draw worked grid', workinggrid, workingcallsign)
         gridsworked.push(workinggrid)
       }
+    } else if (qso.includes(mycallsign) && (qso[9].includes("73") == false)) {
+      // I'm working a station, but not sure of the context. Probably Field Day.
+      workingcallsign = qso[7];
+      gethaminfo(workingcallsign);
+      console.log("Working a station out of context: "+workingcallsign);
     } else if (qso.includes("CQ")) {
         var gridsquare;
         gridsquare = qso[qso.length-1];
