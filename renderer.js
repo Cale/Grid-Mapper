@@ -7,6 +7,7 @@
 const ipc = require('electron').ipcRenderer;
 
 ipc.on('draw my grid', (event, mygridsquare) => {
+  console.log('Drawing my grid')
   // Draw my grid square on map.
   var mygridcoords = L.Maidenhead.indexToBBox(mygridsquare);
   L.rectangle([[mygridcoords[0], mygridcoords[1]], [mygridcoords[2], mygridcoords[3]]], {
@@ -71,13 +72,13 @@ ipc.on('clear working grid', (event) => {
   workinggrid.clearLayers();
 })
 
-ipc.on('draw worked grid', (event, grid, call) => {
+ipc.on('draw worked grid', (event, grid) => {
   var coords = L.Maidenhead.indexToBBox(grid);
 
   L.rectangle([[coords[0], coords[1]], [coords[2], coords[3]]], {
     name: grid,
     color: "#00ff00",
-    fillOpacity: 0.75,
-    stroke: false,
+    fillOpacity: 0.5,
+    stroke: true,
   }).addTo(workedgrids);
 })

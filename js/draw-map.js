@@ -12,10 +12,10 @@ L.control.zoom({
      position:'topright'
 }).addTo(map);
 
-// Initialize Leaflet.Maidenhead library (https://gitlab.com/IvanSanchez/leaflet.maidenhead)
+//Initialize Leaflet.Maidenhead library (https://gitlab.com/IvanSanchez/leaflet.maidenhead)
 // L.maidenhead({
 //   precision: 4,
-//
+
 //   polygonStyle: {
 // 		color: "#ffffff",
 // 		weight: .4,

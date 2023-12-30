@@ -62,10 +62,11 @@ import { QueueScheduler } from './QueueScheduler';
  * // "before", 1
  * // "after", 1
  * ```
- *
- * @static true
- * @name queue
- * @owner Scheduler
  */
 
-export const queue = new QueueScheduler(QueueAction);
+export const queueScheduler = new QueueScheduler(QueueAction);
+
+/**
+ * @deprecated Renamed to {@link queueScheduler}. Will be removed in v8.
+ */
+export const queue = queueScheduler;

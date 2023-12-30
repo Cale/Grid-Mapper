@@ -101,11 +101,11 @@ textarea {
    #map { height: 800px; }
 
    a {
-     color: #9feae3;
+     color: #cecece;
    }
 
    a:visited {
-     color: #9feae3;
+     color: #cecece;
    }
 
    a:hover {
@@ -113,7 +113,7 @@ textarea {
    }
 
    #ham-info {
-     background-color: #036aaf;
+     background-color: #444;
      color: #fff;
      display: none;
      font-family: sans-serif;
@@ -142,7 +142,7 @@ textarea {
    }
 
     #working-station h1 {
-      border-bottom: 1px dashed #9fccea;
+      border-bottom: 1px dashed #ccc;
       margin-top: 0;
       padding-bottom: 20px;
     }

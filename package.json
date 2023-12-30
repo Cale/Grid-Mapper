@@ -1,5 +1,5 @@
 {
-  "name": "Grid-Mapper",
+  "name": "grid-mapper",
   "version": "1.2.1",
   "description": "Mapping grid squares.",
   "main": "main.js",
@@ -8,7 +8,10 @@
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
-  "repository": "https://github.com/Cale/Grid-Mapper",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cale/Grid-Mapper.git"
+  },
   "keywords": [
     "FT8",
     "grid",
@@ -55,5 +58,12 @@
         }
       ]
     }
+  },
+  "bugs": {
+    "url": "https://github.com/Cale/Grid-Mapper/issues"
+  },
+  "homepage": "https://github.com/Cale/Grid-Mapper#readme",
+  "directories": {
+    "doc": "doc"
   }
 }
