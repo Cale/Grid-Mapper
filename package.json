@@ -1,6 +1,6 @@
 {
   "name": "grid-mapper",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Mapping grid squares.",
   "main": "main.js",
   "scripts": {
@@ -22,11 +22,12 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.45",
-    "@electron-forge/maker-deb": "^6.0.0-beta.45",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.45",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.45",
-    "@electron-forge/maker-zip": "^6.0.0-beta.45",
+    "@electron-forge/cli": "^6.4.2",
+    "@electron-forge/maker-deb": "^6.4.2",
+    "@electron-forge/maker-rpm": "^6.4.2",
+    "@electron-forge/maker-squirrel": "^6.4.2",
+    "@electron-forge/maker-zip": "^6.4.2",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
     "electron": "^18.3.7"
   },
   "dependencies": {

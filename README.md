@@ -1,8 +1,6 @@
 # Grid-Mapper
 Grid Mapper work with [WSJT-X](https://wsjt.sourceforge.io/) to display calling stations' grids on a map, display previously worked grids on a map, display the station's grid currently being worked on a map, and information about the station being worked showing up on a side panel. All in real time.
 
-When I created this app I didn't realize a simmilar app called [GridTracker](https://gridtracker.org/) existed. For a more "kitchen sink" approach to this concept, give that app a try.
-
 Color key:
 * Green squares: Previously worked station grids.
 * Yellow squares: Previously worked station grids currently calling CQ.
@@ -20,7 +18,9 @@ Release v1.2 differentiates between grids calling CQ. Worked grids display as ye
 Head over to the [releases](https://github.com/Cale/Grid-Mapper/releases "releases") page for download options.
 
 ## Philosophy
-Grid Mapper is designed for the casual FT8 user. It's primary function allows the operator to quickly see where the station being worked is located and easy access to that station's QRZ info. This solved a personal pain point of mine that involved lots of manual typing of callsigns and grid squares into various websites to get the same information. 
+Grid Mapper is designed for the casual FT8 user. It's primary function allows the operator to quickly see where the station being worked is located and easy access to that station's QRZ info. This solved a personal pain point of mine that involved lots of manual typing of callsigns and grid squares into various websites to get the same information.
+
+When I created this app I didn't realize a similar app called [GridTracker](https://gridtracker.org/) existed. For a more "kitchen sink" approach to this concept, give that app a try.
 
 ## Roadmap
 Next steps include:
